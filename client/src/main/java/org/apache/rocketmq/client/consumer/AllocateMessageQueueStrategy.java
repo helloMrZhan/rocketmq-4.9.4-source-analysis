@@ -34,10 +34,10 @@ public interface AllocateMessageQueueStrategy {
      * @return The allocate result of given strategy
      */
     List<MessageQueue> allocate(
-        final String consumerGroup,
-        final String currentCID,
-        final List<MessageQueue> mqAll,
-        final List<String> cidAll
+            final String consumerGroup, //当前消费client处理的消息组
+            final String currentCID,//当前消费client的客户端ID
+            final List<MessageQueue> mqAll,//消息组包含的所有消息队列列表
+            final List<String> cidAll  //消息组对应的所有消费Client的客户端ID列表
     );
 
     /**
