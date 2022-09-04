@@ -90,6 +90,8 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
      * </p>
      *
      * This field defaults to clustering.
+     *
+     * 消息模型定义了将消息传递到每个客户端的方式,默认集群模式。
      */
     private MessageModel messageModel = MessageModel.CLUSTERING;
 
@@ -136,11 +138,13 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
 
     /**
      * Queue allocation algorithm specifying how message queues are allocated to each consumer clients.
+     * 队列分配算法，指定如何将消息队列分配给每个客户端。
      */
     private AllocateMessageQueueStrategy allocateMessageQueueStrategy;
 
     /**
      * Subscription relationship
+     * 订阅关系
      */
     private Map<String /* topic */, String /* sub expression */> subscription = new HashMap<String, String>();
 
@@ -151,16 +155,19 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
 
     /**
      * Offset Storage
+     * 消息进度存储
      */
     private OffsetStore offsetStore;
 
     /**
      * Minimum consumer thread number
+     * 最小消费线程数
      */
     private int consumeThreadMin = 20;
 
     /**
      * Max consumer thread number
+     * 最大消费线程数
      */
     private int consumeThreadMax = 20;
 
@@ -171,12 +178,15 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
 
     /**
      * Concurrently max span offset.it has no effect on sequential consumption
+     * 单队列并行消费允许的最大跨度，默认值2000
      */
     private int consumeConcurrentlyMaxSpan = 2000;
 
     /**
      * Flow control threshold on queue level, each message queue will cache at most 1000 messages by default,
      * Consider the {@code pullBatchSize}, the instantaneous value may exceed the limit
+     *
+     * 队列级别的流量控制阈值，拉消息本地队列缓存消息最大数
      */
     private int pullThresholdForQueue = 1000;
 
@@ -186,6 +196,8 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
      *
      * <p>
      * The size(MB) of a message only measured by message body, so it's not accurate
+     *
+     * 在队列级别限制缓存的消息大小，默认情况下每个消息队列最多缓存100MiB消息
      */
     private int pullThresholdSizeForQueue = 100;
 
@@ -213,16 +225,19 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
 
     /**
      * Message pull Interval
+     * 消息拉取时间间隔，由于是长轮询，所以为0，但是如果应用为了流控，也可以设置大于0的值，单位毫秒，默认0。
      */
     private long pullInterval = 0;
 
     /**
      * Batch consumption size
+     * 批量消费，一次消费多少条消息，默认1。
      */
     private int consumeMessageBatchMaxSize = 1;
 
     /**
      * Batch pull size
+     *  批量拉消息，一次最多拉多少条
      */
     private int pullBatchSize = 32;
 
@@ -237,11 +252,13 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
     private boolean unitMode = false;
 
     /**
-     * Max re-consume times. 
+     * Max re-consume times.
      * In concurrently mode, -1 means 16;
      * In orderly mode, -1 means Integer.MAX_VALUE.
      *
      * If messages are re-consumed more than {@link #maxReconsumeTimes} before success.
+     *
+     * 最大重试次数，并行模式下默认-1也就是16次，顺序模式下默认-1表示Integer.MAX_VALUE。
      */
     private int maxReconsumeTimes = -1;
 
@@ -252,11 +269,13 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
 
     /**
      * Maximum amount of time in minutes a message may block the consuming thread.
+     * 消息阻塞使用线程的最长时间(以分钟为单位)。
      */
     private long consumeTimeout = 15;
 
     /**
      * Maximum time to await message consuming when shutdown consumer, 0 indicates no await.
+     * 当关闭消费者时等待消息消耗的最大时间，0表示没有等待。
      */
     private long awaitTerminationMillisWhenShutdown = 0;
 
@@ -413,7 +432,7 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
     public void createTopic(String key, String newTopic, int queueNum) throws MQClientException {
         createTopic(key, withNamespace(newTopic), queueNum, 0);
     }
-    
+
     @Override
     public void setUseTLS(boolean useTLS) {
         super.setUseTLS(useTLS);
@@ -421,7 +440,7 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
             ((AsyncTraceDispatcher) traceDispatcher).getTraceProducer().setUseTLS(useTLS);
         }
     }
-    
+
     /**
      * This method will be removed in a certain version after April 5, 2020, so please do not use this method.
      */
