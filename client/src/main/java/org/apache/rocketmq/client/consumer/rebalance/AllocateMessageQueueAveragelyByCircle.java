@@ -22,6 +22,8 @@ import org.apache.rocketmq.common.message.MessageQueue;
 
 /**
  * Cycle average Hashing queue algorithm
+ *
+ * 周期平均哈希队列算法
  */
 public class AllocateMessageQueueAveragelyByCircle extends AbstractAllocateMessageQueueStrategy {
 

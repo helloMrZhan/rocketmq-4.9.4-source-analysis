@@ -23,6 +23,8 @@ import org.apache.rocketmq.common.message.MessageQueue;
 
 /**
  * Computer room Hashing queue algorithm, such as Alipay logic room
+ *
+ * 机房哈希队列算法，类似支付宝机房逻辑
  */
 public class AllocateMessageQueueByMachineRoom extends AbstractAllocateMessageQueueStrategy {
     private Set<String> consumeridcs;

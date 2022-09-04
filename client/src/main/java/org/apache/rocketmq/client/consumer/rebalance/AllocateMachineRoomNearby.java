@@ -32,6 +32,8 @@ import org.apache.rocketmq.common.message.MessageQueue;
  * If any consumer is alive in a machine room, the message queue of the broker which is deployed in the same machine
  * should only be allocated to those. Otherwise, those message queues can be shared along all consumers since there are
  * no alive consumer to monopolize them.
+ *
+ * 一种基于机房附近优先级的分配策略代理。可以指定实际的分配策略。
  */
 public class AllocateMachineRoomNearby extends AbstractAllocateMessageQueueStrategy {
 
