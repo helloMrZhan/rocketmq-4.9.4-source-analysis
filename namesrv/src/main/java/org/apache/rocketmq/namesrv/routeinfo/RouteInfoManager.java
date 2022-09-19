@@ -54,10 +54,25 @@ public class RouteInfoManager {
     private static final InternalLogger log = InternalLoggerFactory.getLogger(LoggerName.NAMESRV_LOGGER_NAME);
     private final static long BROKER_CHANNEL_EXPIRED_TIME = 1000 * 60 * 2;
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    /**
+     * 存储所有Topic与Broker关联的属性信息
+     */
     private final HashMap<String/* topic */, Map<String /* brokerName */ , QueueData>> topicQueueTable;
+    /**
+     *  存储BrokerName对应的属性信息
+     */
     private final HashMap<String/* brokerName */, BrokerData> brokerAddrTable;
+    /**
+     * 存储集群的信息
+     */
     private final HashMap<String/* clusterName */, Set<String/* brokerName */>> clusterAddrTable;
+    /**
+     * 存储Broker机器的实时状态
+     */
     private final HashMap<String/* brokerAddr */, BrokerLiveInfo> brokerLiveTable;
+    /**
+     * 存储过滤服务器信息
+     */
     private final HashMap<String/* brokerAddr */, List<String>/* Filter Server */> filterServerTable;
 
     public RouteInfoManager() {
@@ -67,6 +82,7 @@ public class RouteInfoManager {
         this.brokerLiveTable = new HashMap<>(256);
         this.filterServerTable = new HashMap<>(256);
     }
+
 
     public ClusterInfo getAllClusterInfo() {
         ClusterInfo clusterInfoSerializeWrapper = new ClusterInfo();
@@ -744,10 +760,25 @@ public class RouteInfoManager {
     }
 }
 
+/**
+ * Broker存活信息
+ */
 class BrokerLiveInfo {
+    /**
+     * 最后一次更新时间
+     */
     private long lastUpdateTimestamp;
+    /**
+     * 数据版本信息
+     */
     private DataVersion dataVersion;
+    /**
+     * 连接通道
+     */
     private Channel channel;
+    /**
+     * HA服务地址
+     */
     private String haServerAddr;
 
     public BrokerLiveInfo(long lastUpdateTimestamp, DataVersion dataVersion, Channel channel,
